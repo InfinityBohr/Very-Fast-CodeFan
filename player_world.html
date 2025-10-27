@@ -50,25 +50,30 @@
   <div id="player"></div>
 
   <script>
+(function(){
+  const urlParams = new URLSearchParams(window.location.search);
+  const streamUrl = urlParams.get('url') || '';
 
-    const raw = new URLSearchParams(window.location.search).get("stream");
-    const streamUrl = "https://infinitybohr.github.io/Very-Fast-CodeFan/player_world.html?stream=" + encodeURIComponent(raw);
-    //const raw = new URLSearchParams(window.location.search).get("stream");
-    //const streamUrl = "https://infinitybohr.github.io/Very-Fast-CodeFan/?url=" + encodeURIComponent(raw);
-
-    jwplayer("player").setup({
+  if(streamUrl){
+    jwplayer("my-jwplayer").setup({
       file: streamUrl,
-      autostart: true,
-      mute: false,
+      type: "hls",          // Force HLS playback
       width: "100%",
-      height: "100%",
-      stretching: "uniform",
+      aspectratio: "16:9",
+      autostart: true,      // Autoplay on page load
+      mute: false,           // Required for autoplay on mobile
       controls: true,
-      primary: "html5",
-      hlshtml: true,  // ensures HLS plays in HTML5
+      preload: "auto",
+      stretching: "uniform",
+      skin: { name: "seven" }
     });
+  } else {
+    document.getElementById("my-jwplayer").innerHTML =
+      "<p style='color:#fff;text-align:center;padding:20px;'>No stream URL provided</p>";
+  }
+})();
 
-    // ✅ Multi-quality (auto-detected from master playlist)
+     // ✅ Multi-quality (auto-detected from master playlist)
     jwplayer("player").on('levels', function(event) {
       console.log("Available qualities:", event.levels);
     });
@@ -78,7 +83,11 @@
       console.error("JWPlayer error:", e);
       alert("Stream failed to load.");
     });
-  </script>
+</script>
+   
+
+    
+
 </body>
 </html>
 
