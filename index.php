@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fancode Stream</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <style>
+    :root {
+      --primary: #1a73e8; /* Fancode blue */
+      --primary-dark: #0d5bbc; /* Darker blue */
+      --secondary: #ff6d00; /* Fancode orange */
+      --accent: #ff9100; /* Lighter orange */
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #121212;
+      color: #f8f9fa;
+      min-height: 100vh;
+      transition: all 0.3s ease;
+    }
+    
+    /* Card Styles */
+    .card {
+      transition: all 0.3s ease;
+      background: #1e1e1e;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      border: 1px solid #333;
+      animation: fadeInUp 0.5s ease forwards;
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Text Colors */
+    .text-dark {
+      color: #f8f9fa !important;
+    }
+    
+    .text-muted {
+      color: #adb5bd !important;
+    }
+    
+    /* Header Styles */
+    .header-glow {
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      box-shadow: 0 4px 12px rgba(26, 115, 232, 0.2);
+    }
+    
+    /* Rest of your existing styles... */
+    .badge {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+    }
+    
+    .status-live {
+      background: linear-gradient(45deg, #e53935, #c62828);
+      color: #fff;
+      animation: pulse 2s infinite;
+    }
+    
+    .status-upcoming {
+      background: linear-gradient(45deg, var(--secondary), var(--accent));
+      color: #fff;
+    }
+    
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.4); }
+      70% { box-shadow: 0 0 0 8px rgba(229, 57, 53, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+    }
+    
+    .tab {
+      position: relative;
+      padding: 8px 16px;
+      transition: all 0.2s ease;
+      color: #adb5bd;
+      font-weight: 500;
+    }
+    
+    .tab::after {
+      content: "";
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 3px;
+      background: var(--primary);
+      transition: width 0.2s ease;
+    }
+    
+    .tab:hover {
+      color: var(--primary);
+    }
+    
+    .tab.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .tab.active::after {
+      width: 80%;
+    }
+    
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    
+    .popup-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .popup {
+      background: #1e1e1e;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .popup-overlay.active .popup {
+      transform: translateY(0);
+    }
+    
+    .popup h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      margin: 12px 0;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      color: #fff;
+      border: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .btn-worldwide {
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+    }
+    
+    .btn-india {
+      background: linear-gradient(45deg, var(--secondary), var(--accent));
+    }
+    
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(26, 115, 232, 0.1);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+    
+    .watch-btn {
+      background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+      color: white;
+      transition: all 0.3s ease;
+    }
+    
+    .watch-btn:hover {
+      background: linear-gradient(45deg, var(--primary-dark), var(--primary));
+    }
+    
+    .text-primary {
+      color: var(--primary);
+    }
+    
+    .text-secondary {
+      color: var(--secondary);
+    }
+  </style>
+</head>
+  <script type='text/javascript' src='//checkupoceandip.com/f7/bc/6b/f7bc6b128423106720db2ba226b22541.js'></script>
+<body class="animate__animated animate__fadeIn">
+  <!-- Navbar -->
+  <header class="header-glow text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold flex items-center space-x-2">
+      <span class="text-2xl">📺</span>
+      <span>Fancode Stream</span>
+    </h1>
+    <div class="flex items-center space-x-4">
+      <span id="lastUpdate" class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full"></span>
+    </div>
+  </header>
+
+  <!-- Tabs -->
+  <div class="flex justify-center mt-6 space-x-6 font-medium bg-gray-800 py-3 mx-4 rounded-lg shadow-sm">
+    <button onclick="filterMatches('all')" class="tab active">All Matches</button>
+    <button onclick="filterMatches('LIVE')" class="tab">Live Now</button>
+    <button onclick="filterMatches('UPCOMING')" class="tab">Upcoming</button>
+  </div>
+
+  <!-- Matches Grid -->
+  <div id="matches" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6">
+    <div class="loading">
+      <div class="loading-spinner"></div>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div id="popupOverlay" class="popup-overlay">
+    <div class="popup">
+      <h2 class="text-lg font-bold mb-4 text-primary">Choose Stream</h2>
+      <button class="btn btn-worldwide" id="worldwideBtn">🌍 Worldwide Stream</button>
+      <button class="btn btn-india" id="indiaBtn">🇮🇳 India Stream</button>
+      <button class="mt-4 text-muted hover:text-white transition-colors" onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+<script>
+const matchesContainer = document.getElementById('matches');
+const popupOverlay = document.getElementById('popupOverlay');
+const worldwideBtn = document.getElementById('worldwideBtn');
+const indiaBtn = document.getElementById('indiaBtn');
+const lastUpdate = document.getElementById('lastUpdate');
+
+let selectedAdfreeUrl = "";
+let allMatches = [];
+
+const worldwidePlayerUrl = 'https://allinonereborn2238.github.io/fcw/player_world.html';
+const indiaPlayerUrl = 'https://allinonereborn2238.github.io/fcw/player_india.html';
+
+function openPopup(adfreeUrl) {
+  selectedAdfreeUrl = adfreeUrl;
+  popupOverlay.classList.add("active");
+}
+function closePopup() {
+  popupOverlay.classList.remove("active");
+}
+
+worldwideBtn.onclick = () => {
+  window.open(`${worldwidePlayerUrl}?stream=${encodeURIComponent(selectedAdfreeUrl)}`, "_blank");
+  closePopup();
+};
+indiaBtn.onclick = () => {
+  window.open(`${indiaPlayerUrl}?stream=${encodeURIComponent(selectedAdfreeUrl)}`, "_blank");
+  closePopup();
+};
+
+function renderMatches(filter = "all") {
+  matchesContainer.innerHTML = "";
+  let filtered = allMatches;
+  if (filter !== "all") {
+    filtered = allMatches.filter(m => m.status === filter);
+  }
+  
+  if (filtered.length === 0) {
+    matchesContainer.innerHTML = `
+      <div class="col-span-full text-center py-10">
+        <div class="text-5xl mb-4 text-muted">😕</div>
+        <h3 class="text-xl font-semibold text-white">No matches found</h3>
+        <p class="text-muted">Try a different filter</p>
+      </div>
+    `;
+    return;
+  }
+  
+  filtered.forEach((match, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.animationDelay = `${index * 0.05}s`; // Staggered animation
+    card.innerHTML = `
+      <div class="relative">
+        <img src="${match.src}" alt="${match.title}">
+        <span class="absolute top-2 left-2 badge">${match.event_category}</span>
+        <span class="absolute top-2 right-2 badge ${match.status === 'LIVE' ? 'status-live' : 'status-upcoming'}">${match.status}</span>
+      </div>
+      <div class="p-4">
+        <h3 class="text-sm text-muted">${match.event_name}</h3>
+        <h2 class="text-base font-bold mt-1 text-white">${match.title}</h2>
+        <p class="text-sm text-muted mt-2">⏰ ${match.startTime}</p>
+        <button class="w-full mt-4 py-3 rounded-lg font-semibold ${match.status === 'LIVE' ? 'watch-btn' : 'bg-gray-700 text-gray-400 cursor-default'}">
+          ${match.status === 'LIVE' ? '▶ Watch Live' : '🔔 Upcoming'}
+        </button>
+      </div>
+    `;
+    if (match.status === 'LIVE') {
+      card.onclick = () => openPopup(match.adfree_url);
+    }
+    matchesContainer.appendChild(card);
+  });
+}
+
+async function loadMatches() {
+  try {
+    const res = await fetch("https://raw.githubusercontent.com/drmlive/fancode-live-events/main/fancode.json");
+    const data = await res.json();
+    allMatches = data.matches;
+    lastUpdate.textContent = "Updated: " + data["last update time"];
+    renderMatches("all");
+  } catch (e) {
+    matchesContainer.innerHTML = `
+      <div class="col-span-full text-center py-10">
+        <div class="text-5xl mb-4 text-muted⚠️</div>
+        <h3 class="text-xl font-semibold text-white">Failed to load matches</h3>
+        <p class="text-muted">Please try again later</p>
+      </div>
+    `;
+  }
+}
+
+function filterMatches(type) {
+  document.querySelectorAll(".tab").forEach(t => {
+    t.classList.remove("active");
+  });
+  event.target.classList.add("active");
+  renderMatches(type);
+}
+
+// Add subtle animation to tabs on hover
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('mouseenter', () => {
+    tab.classList.add('animate__animated', 'animate__pulse');
+  });
+  tab.addEventListener('mouseleave', () => {
+    tab.classList.remove('animate__animated', 'animate__pulse');
+  });
+});
+
+loadMatches();
+</script>
+  <!-- Anti-Adblock Popup -->
+<div class="adb" id="adb" style="display: none;">
+  <div class="adbs">
+    <h3>Adblock/Brave Shields Detected</h3>
+    <p>Please disable your adblocker or Brave Shields to continue browsing this site.</p>
+  </div>
+</div>
+
+<style>
+.adb {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 99999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.adbs {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+@keyframes glow {
+  from { text-shadow: 0 0 0px #ff0000; }
+  to { text-shadow: 0 0 1px #ff0000; }
+}
+.adbs h3 {
+  color: #d00;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+.adbs p {
+  font-size: 16px;
+  color: #333;
+}
+</style>
+
+<script>
+// ----------------- Popup Function -----------------
+function showPopup(reason = "Adblock Detected") {
+  document.getElementById("adb").style.display = "flex";
+  document.querySelector("#adb .adbs h3").innerText = reason;
+
+  if (reason.includes("Brave")) {
+  document.querySelector("#adb .adbs p").innerHTML = `
+    Please disable Brave Shields (click Brave logo → toggle Shields off) to continue browsing.<br>
+    <span style="
+      color: #ff0000;
+      font-weight: bold;
+      animation: glow 1s ease-in-out infinite alternate;
+    ">
+      If still showing message after disabling please reload page
+    </span>
+  `;
+}
+  console.warn("⚠️ Popup Triggered:", reason);
+}
+
+// ----------------- PC Browser Adblock Detection -----------------
+async function detectAdblock() {
+  let detected = false;
+
+  // bait div
+  const bait = document.createElement("div");
+  bait.className = "ad adsbox ad-banner adsense ad-container sponsored";
+  bait.style.cssText = "width:1px;height:1px;position:absolute;left:-9999px;top:-9999px;";
+  document.body.appendChild(bait);
+
+  // bait img
+  const img = document.createElement("img");
+  img.src = "https://pagead2.googlesyndication.com/pagead/imgad?id=CAASFeDxyz";
+  img.style.cssText = "width:1px;height:1px;position:absolute;left:-9999px;top:-9999px;";
+  img.onerror = () => { detected = true; };
+  document.body.appendChild(img);
+
+  // bait iframe
+  const iframe = document.createElement("iframe");
+  iframe.src = "https://googleads.g.doubleclick.net/pagead/html/r2023/sample-ad.html";
+  iframe.style.cssText = "width:1px;height:1px;position:absolute;left:-9999px;top:-9999px;";
+  iframe.onerror = () => { detected = true; };
+  document.body.appendChild(iframe);
+
+  // bait script
+  const script = document.createElement("script");
+  script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+  script.async = true;
+  script.onerror = () => { detected = true; };
+  document.head.appendChild(script);
+
+  await new Promise(resolve => setTimeout(resolve, 500));
+
+  if (
+    window.getComputedStyle(bait).display === "none" ||
+    bait.offsetHeight === 0 ||
+    bait.offsetParent === null
+  ) {
+    detected = true;
+  }
+
+  bait.remove();
+  img.remove();
+  iframe.remove();
+  script.remove();
+
+  return detected;
+}
+
+// ----------------- Brave Shields Detection -----------------
+async function detectBraveShields() {
+  try {
+    let res = await fetch("https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js", {
+      method: "GET",
+      cache: "no-store",
+      mode: "no-cors"
+    });
+
+    if (res.type === "opaque") {
+      try {
+        const buf = await res.clone().arrayBuffer();
+        console.log("🟡 Brave Response Size:", buf.byteLength);
+
+        // Corrected Logic:
+        // Size < 100 = Shields OFF
+        // Size >= 100 = Shields ON
+        if (buf.byteLength < 100) {
+          return false; // Shields OFF
+        } else {
+          return true;  // Shields ON
+        }
+      } catch (e) {
+        console.warn("🟡 Brave fetch blocked", e);
+        return true; // Shields ON
+      }
+    }
+    return true; // default treat as ON
+  } catch (e) {
+    console.error("🛑 Brave Shields hard blocked", e);
+    return true; // Shields ON
+  }
+}
+
+// ----------------- Main -----------------
+window.addEventListener("load", async () => {
+  const shieldsOn = await detectBraveShields();
+  if (shieldsOn) {
+    showPopup("Brave Shields Detected");
+    return;
+  }
+
+  const adblocker = await detectAdblock();
+  if (adblocker) {
+    showPopup("Adblock Detected");
+  }
+});
+</script>
+</body>
+  <script type='text/javascript' src='//checkupoceandip.com/63/88/ac/6388ace5c2a702a7b58f724683244363.js'></script>
+</html>
