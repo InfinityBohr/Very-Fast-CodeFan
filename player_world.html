@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Infinity Bohr Premium Fancode Player</title>
  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- JW Player Library -->
@@ -81,7 +82,21 @@
 <body>
 
 <div class="main-container">
-
+  <!-- Top Ad -->
+  <div class="ad-container">
+    <div class="ad-box">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : 'db78e49a3c97dc3562c3b48559ea4a28',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//staunchtownsegg.com/db78e49a3c97dc3562c3b48559ea4a28/invoke.js"></script>
+    </div>
+  </div>
 
   <!-- Player -->
   <div class="player-container">
@@ -90,8 +105,23 @@
     </div>
   </div>
 
-  
+  <!-- Bottom Ad -->
+  <div class="ad-container">
+    <div class="ad-box">
+      <script type="text/javascript">
+        atOptions = {
+          'key' : 'db78e49a3c97dc3562c3b48559ea4a28',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script type="text/javascript" src="//staunchtownsegg.com/db78e49a3c97dc3562c3b48559ea4a28/invoke.js"></script>
+    </div>
+  </div>
 </div>
+
 <script>
 (function(){
   const urlParams = new URLSearchParams(window.location.search);
@@ -115,25 +145,10 @@
       "<p style='color:#fff;text-align:center;padding:20px;'>No stream URL provided</p>";
   }
 })();
-
-     // ✅ Multi-quality (auto-detected from master playlist)
-    jwplayer("player").on('levels', function(event) {
-      console.log("Available qualities:", event.levels);
-    });
-
-    // ✅ Error handling
-    jwplayer("player").on('error', function(e) {
-      console.error("JWPlayer error:", e);
-      alert("Stream failed to load.");
-    });
 </script>
-   
-
-    
 
 </body>
 </html>
-
 
 
 
