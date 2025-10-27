@@ -296,7 +296,7 @@ function closePopup() {
 }
 
 worldwideBtn.onclick = () => {
-  window.open(`${worldwidePlayerUrl}?stream=${encodeURIComponent(selectedAdfreeUrl)}`, "_blank");
+  window.open(`${worldwidePlayerUrl}?url=${encodeURIComponent(selectedAdfreeUrl)}`, "_blank");
   closePopup();
 };
 indiaBtn.onclick = () => {
