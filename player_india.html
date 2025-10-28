@@ -137,7 +137,6 @@
       hls.on(Hls.Events.MANIFEST_PARSED, () => {
         const availableQualities = hls.levels.map(level => level.height).filter(Boolean).sort((a, b) => b - a);
         const defaultQuality = availableQualities.includes(1080) ? 1080 : (availableQualities[0] || 360);
-
         const player = new Plyr(video, {
           autoplay: true,
           muted: true,
