@@ -69,33 +69,7 @@
       100% { opacity: 0.6; }
     }
   </style>
-  <style>
-.video-container {
-  position: relative; /* Allows positioning of the logo watermark */
-}
-
-/* Position and style the logo */
-.logo-watermark {
-  position: absolute;
-  top: 10px; /* Adjust top/bottom and left/right for placement */
-  right: 10px;
-  width: 80px; /* Adjust width and height as needed */
-  height: 45px;
-  background-image: url('https://i.ibb.co/mFX4Df9C/Homepage-DWeb-Main-Banner.png'); /* Add your logo path */
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 10; /* Ensure the logo appears on top of the video */
-  opacity: 0.8; /* Adjust for transparency */
-  pointer-events: none; /* Prevents the logo from interfering with player controls */
-}
-
-/* Hide logo when the player is in fullscreen to prevent conflicts with native controls */
-.plyr--fullscreen .logo-watermark {
-  display: ;
-}
-    
-  </style>
+  
 </head>
 <body>
   <!-- Loader -->
@@ -107,12 +81,10 @@
   <!-- Player  default-->
   <!--<video id="player" autoplay muted playsinline controls crossorigin></video>-->
   <!-- Player  new>-->
-<div class="video-container">
-  <video id="player" autoplay muted controls crossorigin playsinline  poster="">
+  <video id="player" autoplay muted controls crossorigin playsinline  poster="https://i.ibb.co/mFX4Df9C/Homepage-DWeb-Main-Banner.png">
     <!--<source src="" type="video/mp4" />-->
   </video>
-  <div class="logo-watermark"></div>
-</div>
+
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script>
   <script>
