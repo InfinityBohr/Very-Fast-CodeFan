@@ -1,0 +1,37 @@
+
+Code
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clappr Player with URL Parameter Source</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
+</head>
+<body>
+    <h1>My Clappr Video Player</h1>
+    <div id="player"></div>
+
+    <script type="text/javascript">
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        var videoSource = getUrlParameter('video_url');
+
+        if (videoSource) {
+            var player = new Clappr.Player({
+                source: videoSource,
+                parentId: '#player',
+                width: '100%', // Example: make player responsive
+                height: 'auto',
+                autoPlay: true,
+            });
+        } else {
+            document.getElementById('player').innerHTML = '<p>Please provide a video URL using the "video_url" parameter in the URL (e.g., ?video_url=http://clappr.io/highline.mp4).</p>';
+        }
+    </script>
+</body>
+</html>
