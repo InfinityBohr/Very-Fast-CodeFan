@@ -94,6 +94,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     :root {
       --primary: #1a73e8; /* Fancode blue */
@@ -340,10 +341,17 @@ Check your Browserslist config to be sure that your targets are set up correctly
       <img src="https://i.ibb.co/mFX4Df9C/Homepage-DWeb-Main-Banner.png" width="1440" height="451" alt="image" fit="contain" background="transparent">
 
   <!-- Tabs -->
-  <div class="flex justify-center mt-6 space-x-6 font-medium bg-gray-800 py-3 mx-4 rounded-lg shadow-sm">
-    <button onclick="filterMatches('all')" class="tab active">All Matches</button>
-    <button onclick="filterMatches('LIVE')" class="tab">Live Now</button>
-    <button onclick="filterMatches('UPCOMING')" class="tab">Upcoming</button>
+  <div class="tabs-container">
+    <button onclick="filterMatches('all')" class="tab active">All</button>
+    <button onclick="filterMatches('LIVE')" class="tab">Live</button>
+    <button onclick="filterMatches('NOT_STARTED')" class="tab">Upcoming</button>
+    <button onclick="filterMatches('COMPLETED')" class="tab">Completed</button>
+  </div>
+
+  <div class="category-wrapper">
+    <button onclick="filterCategory('all')" class="category-filter active">All Sports</button>
+    <button onclick="filterCategory('Football')" class="category-filter">⚽ Football</button>
+    <button onclick="filterCategory('Cricket')" class="category-filter">🏏 Cricket</button>
   </div>
 
   <!-- Matches Grid -->
