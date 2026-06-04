@@ -323,6 +323,35 @@ Check your Browserslist config to be sure that your targets are set up correctly
     .text-secondary {
       color: var(--secondary);
     }
+
+     .tabs-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.25rem;
+      background: #1f2937;
+      border-radius: 2rem;
+      padding: 0.5rem 0.75rem;
+      margin: 1.5rem 1rem 0.5rem 1rem;
+    }
+    
+    .tab {
+      position: relative;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+      color: #adb5bd;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      border-radius: 2rem;
+    }
+    
+    .tab.active {
+      background: var(--primary);
+      color: white;
+    }
+    
   </style>
 </head>
 <body class="animate__animated animate__fadeIn">
