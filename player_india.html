@@ -68,6 +68,25 @@
       50% { opacity: 1; }
       100% { opacity: 0.6; }
     }
+
+    /* back button style */
+
+    .back-btn {
+    color: white;
+    text-decoration: none;
+    font-size: 24px;
+    background: rgba(255,255,255,0.1);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+}
+
+.back-btn:hover { background: var(--primary); transform: scale(1.1); }
   </style>
  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script> 
@@ -78,6 +97,19 @@
     <div class="spinner"></div>
     <div class="loading-text">Loading Stream...</div>
   </div>
+
+  <div class="player-header" id="header">
+    <div class="header-left">
+        <a href="http://www.fancode.ib" class="back-btn">←</a>
+        <div class="channel-info">
+            <img src="http://www.bohrtv.ib/LiveTV/assets/ottapplogo/FanCode.png" alt="" class="channel-logo" onerror="this.style.display='none'">
+            <span class="channel-name">Sony SAB HD<span style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; margin-left: 8px; vertical-align: middle;">HD</span></span>
+        </div>
+    </div>
+    <div class="header-right">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:white;letter-spacing:1px;">SPORT'S<span style="color:#ff3e3e;">LIVE TV</span></span>
+    </div>
+</div>
 
   <!-- Player  default-->
     <video id="player" autoplay muted playsinline controls crossorigin poster="https://i.ibb.co/mFX4Df9C/Homepage-DWeb-Main-Banner.png"></video>
