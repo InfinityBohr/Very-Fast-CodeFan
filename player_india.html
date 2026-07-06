@@ -106,6 +106,23 @@
 
 .header-left { display: flex; align-items: center; gap: 15px; }
 .header-right { display: flex; align-items: center; gap: 10px; }
+.channel-info { display: flex; align-items: center; gap: 12px; }
+
+.channel-logo {
+    height: 35px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+}
+
+.channel-name {
+    color: white;
+    font-weight: 700;
+    font-size: 18px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
   </style>
  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.1.4/dist/hls.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/plyr@3.6.12/dist/plyr.min.js"></script> 
@@ -122,7 +139,7 @@
     <div class="header-left">
         <a href="http://www.fancode.ib" class="back-btn">←</a>
         <div class="channel-info">
-            <img src="http://www.bohrtv.ib/LiveTV/assets/ottapplogo/FanCode.png" alt="Fancode" class="channel-logo" onerror="this.style.display='none'">
+            <img src="http://www.bohrtv.ib/LiveTV/assets/ottapplogo/FanCode.png" alt="Fancode" class="channel-logo" ">
             <span class="channel-name"><span style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #000; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 800; margin-left: 8px; vertical-align: middle;">Fancode</span></span>
         </div>
     </div>
